@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aman Shaikh - Python Developer & AI Enthusiast</title>
+<style>
+  #top-right-icons {
+    position: fixed;
+    top: 15px;
+    right: 25px;
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+  }
+  #top-right-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: #1f2e43;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #23c4d466;
+    transition: background 0.3s ease, transform 0.25s ease;
+  }
+  #top-right-icons a:hover {
+    background: #4ecdc4;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #4ecdc4cc;
+  }
+  #top-right-icons a svg {
+    fill: #cde8eb;
+    width: 22px;
+    height: 22px;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #101624;
+    color: #E1E6F0;
+    margin: 0;
+    padding: 0 20px 40px 20px;
+  }
+
+  header {
+    text-align: center;
+  }
+
+  #roles-container {
+    position: relative;
+    height: 2em;
+    overflow: hidden;
+    margin: 15px auto 0 auto;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .role {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #4ecdc4;
+    transition: opacity 0.7s cubic-bezier(.7,.2,.3,1), transform 0.7s cubic-bezier(.7,.2,.3,1);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .role.visible {
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+    color: #4ecdc4;
+    text-shadow: 0 0 10px #4ecdc4bb;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+
+  nav a {
+    color: #7bd3d1;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    background: #1a283f;
+    padding: 12px 25px;
+    border-radius: 40px;
+    box-shadow: 0 0 12px #32a9a8aa;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  nav a:hover {
+    background: #4ecdc4;
+    color: #101624;
+    box-shadow: 0 0 18px #4ecdc4cc;
+  }
+
+  section {
+    max-width: 900px;
+    margin: 0 auto 50px auto;
+    background: #1f2f45;
+    border-radius: 15px;
+    padding: 35px 35px 40px 35px;
+    box-shadow: 0 8px 30px #162536cc;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: #4ecdc4;
+    border-bottom: 3px solid #4ecdc4;
+    padding-bottom: 12px;
+    text-align: center;
+    text-shadow: 0 0 7px #2d6f6aaa;
+    letter-spacing: 1px;
+  }
+
+  #about .about-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  #about img {
+    flex: 0 0 220px;
+    border-radius: 18px;
+    box-shadow: 0 0 20px #4ecdc430;
+    width: 220px;
+    height: auto;
+    object-fit: cover;
+  }
+  #about p.about-text {
+    flex: 1 1 400px;
+    color: #cdd6e0;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    text-shadow: 0 0 5px #1b2e5266;
+  }
+
+  .skills-logos {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    grid-template-rows: repeat(2, 90px);
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    max-width: 420px;
+    margin: 25px auto 0 auto;
+  }
+  .skills-logos img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #2a3b55;
+    padding: 8px;
+    box-shadow: 0 0 8px #4ecdc4aa;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .skills-logos img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 20px #4ecdc4ee;
+  }
+
+  #projects-soon {
+    color: #76e4e1;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 60px 15px;
+    font-weight: 700;
+    text-shadow: 0 0 12px #2d6f6aaa;
+  }
+  .contact-info {
+    text-align: center;
+    font-size: 1.15rem;
+    color: #b0e0de;
+  }
+  .contact-info a {
+    color: #49c0bb;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-bottom: 1.5px dotted #29a39b;
+    padding-bottom: 2px;
+  }
+  .contact-info a:hover {
+    color: #7de6e2;
+    border-bottom-color: #7de6e2;
+  }
+  footer {
+    text-align: center;
+    font-weight: 700;
+    color: #ffc870;
+    font-size: 1.3rem;
+    padding: 12px 0;
+    border-radius: 12px;
+    background: #212f40;
+    box-shadow: 0 0 15px #464a5328;
+    max-width: 900px;
+    margin: 0 auto;
+    letter-spacing: 1px;
+  }
+  @media screen and (max-width: 700px) {
+    #about .about-content {
+      flex-direction: column;
+    }
+    #about img {
+      width: 160px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .skills-logos {
+      grid-template-columns: repeat(3, 90px);
+      grid-template-rows: repeat(3, 90px);
+      max-width: 320px;
+      gap: 20px;
+    }
+    .skills-logos img {
+      width: 65px;
+      height: 65px;
+    }
+  }
+</style>
+</head>
+<body>
+<br>
+<!-- Top right icons -->
+<div id="top-right-icons">
+  <a href="https://github.com/your-github-username" target="_blank" rel="noopener" title="GitHub">
+    <!-- GitHub SVG icon -->
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .296c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.388.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.415-4.033-1.415-.546-1.387-1.334-1.757-1.334-1.757-1.091-.745.083-.73.083-.73 1.205.085 1.838 1.234 1.838 1.234 1.07 1.834 2.809 1.305 3.495.997.107-.775.418-1.305.76-1.607-2.665-.3-5.467-1.332-5.467-5.932 0-1.311.47-2.381 1.235-3.222-.124-.304-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 013.003-.404c1.018.005 2.045.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.652.243 2.872.12 3.176.77.84 1.232 1.911 1.232 3.222 0 4.61-2.807 5.628-5.479 5.922.43.37.813 1.101.813 2.222v3.293c0 .322.218.693.825.574C20.565 22.092 24 17.59 24 12.296c0-6.627-5.373-12-12-12"/></svg>
+  </a>
+  <a href="https://www.linkedin.com/in/your-linkedin-id" target="_blank" rel="noopener" title="LinkedIn">
+    <!-- LinkedIn SVG icon -->
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.7 0-5 2.3-5 5v14c0 2.7 2.3 5 5 5h14c2.7 0 5-2.3 5-5v-14c0-2.7-2.3-5-5-5zm-11 20h-3v-11h3v11zm-1.5-12.3c-1 0-1.7-.8-1.7-1.7s.8-1.6 1.7-1.6 1.7.7 1.7 1.7-.6 1.6-1.7 1.6zm13.5 12.3h-3v-5.7c0-1.5-.5-2.5-1.8-2.5-1 0-1.5.7-1.8 1.5-.1.2-.1.5-.1.8v5.9h-3v-11h3v1.6c.4-.7 1-1.6 2.4-1.6 1.7 0 3 1.1 3 3.6v6.4z"/></svg>
+  </a>
+  <a href="" target="_blank" rel="noopener" title="Resume">
+    <!-- Resume icon SVG -->
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#cde8eb" d="M19 2H9c-.55 0-1 .45-1 1v2H5c-1.1 0-2 .9-2 2v13c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3V3c0-.55-.45-1-1-1zm-1 16H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V8h12v2zM8 4h8v2H8V4z"/></svg>
+  </a>
+</div>
+
+<header>
+  <h1>Aman Shaikh</h1><br>
+  <div id="roles-container">
+    <span class="role">Python Developer</span>
+    <span class="role">AI Enthusiast</span>
+    <span class="role">DevOps Engineer</span>
+    <span class="role">AWS</span>
+    <span class="role">OOPS</span>
+    <span class="role">Web Development</span>
+    <span class="role">Intern @Skillcraft</span>
+    <span class="role">Student Ambassador @Internshala & @Letsupgrade</span>
+  </div>
+</header><br><br><br>
+
+<nav>
+  <a href="#about">About Me</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="about" class="visible">
+  <h2>About Me</h2>
+  <div class="about-content">
+    <img src="C:\Users\91740\Desktop\aman.jpg" alt="Aman Shaikh" />
+    <p class="about-text">
+      I am Aman Shaikh, a dedicated Python Developer and AI enthusiast passionate about building smart, efficient solutions. With strong expertise in Python and AI technologies, I drive innovation and solve real-world problems. I thrive on learning new challenges and delivering impactful results that empower businesses to succeed.
+      <br><br>I am a dedicated team player who thrives in collaborative environments, always eager to contribute my skills and support my colleagues. My strong communication and problem-solving abilities make me an invaluable team member. Moreover, I possess leadership qualities—motivating, guiding, and inspiring the team—to drive projects toward successful and timely completion whenever entrusted with that responsibility.
+    </p>
+  </div>
+</section>
+
+<section id="education" class="visible">
+  <h2>Education</h2>
+  <div class="edu-list">
+    <div class="edu-item">
+      <h3>ST Paul's High School</h3>
+      <p>High School — Percentage: 80%</p>
+    </div>
+    <div class="edu-item">
+      <h3>Rn Shetty Polytechnic</h3>
+      <p>Diploma in Computer Science — CGPA: 7.5/10</p>
+    </div>
+    <div class="edu-item">
+      <h3>Jain College Of Engineering</h3>
+      <p>Undergraduate Degree in Computer Science — CGPA: 8.4/10</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="visible">
+  <h2>Skills</h2>
+  <div class="skills-logos" id="skillsGrid">
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python" title="Python" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="HTML5" title="HTML5" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919826.png" alt="CSS3" title="CSS3" />
+    <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java" title="Java" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="AWS" title="AWS" />
+    <img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTExLjA0IDE0LjUybC01OS40OSA0Mi41Yy0xMi4yMyA4LTIzLjAzIDE5LTIxLjYyIDM1LjYybDEuNTQgMTMuNDZuLTEuNTR6bS01NC4yOCAxMi4xMWMxNS40My0xMC4wNCAyNC42Ny0zLjEzIDI5LjE3IDguMzhtMi4yOSA4Mi41MmEzMS4xOSAzMS4xOSAwIDAgMCAyMy0xMy4xN2wzNi4yOSA0MC4zOGEyNC4wNiAyNC4wNiAwIDAgMS0xMi4xMyAyLjM5aC0xOHQtNjguMTMtNDguMTMuMzMuOTktLjE2LjcxLS43NiAzLjM4MjctMTUuMTMgMjAuNjIgMy4yNSAxMS4xNy04LjYuNjctMjcuNjItMi45Mi01MC45NS0yLjY1IDQuNDggMjkuMjMgOS4zNSAzNi44MiAyMi4xNyAyLjA1IDYuODUuMTYgMTMuNjMtNSA0LjAxem0xMTEuNjggMzAuNzRhMTYuOTcgMTYuOTcgMCAwIDEtMTkuMDYgMTEuNDJsLTEwLjk0IDQuNDNjLTIuNzYuMjgtNi41OSAxLjkyLTguMDcgMy4zNGEyLjA1IDIuMDUgMCAwIDAgMCAyLjA4bDIuMjUgMy42Yy4wOS4xNCAyLjY0Ljg4IDUuNjMgMS41NGwxNy45NCA0LjI4YS43Ni43NiAwIDAgMCAuOCAwIC43LjcuMCAwIDAgLjQgMi4xNSA0LjUgNC41IDAgMCAwIDguMyAyLjMgOC4yIDguMiAwIDAgMCAxNS42IDJsNy43LTkuMDNjNS43LTEuNDUgMTIuNi00LjE5IDE3LjYyLTcuMDNIMTE5LjgzYTMwLjQxIDMwLjQxIDAgMCAxLTQuMTEtMy4zNCAxNi45IDE2LjkgMCAwIDEtMy4wMi0xLjEtMjQuNzUgMjQuNzUgMCAwIDEtMTguMi0xMi42em0xMC40MiA3Mi41MmwtNy41IDMuOTNhNi4yNyA2LjI3IDAgMSAxIDYuNTMtMTAuMDJ6IiBmaWxsPSIjMjNjNGQ0Ii8+PC9zdmc+" style="width:70px; height:70px; border-radius:14px; box-shadow: 0 0 15px #23c4d4bb;" alt="Google Colab" title="Google Colab" />
+    <img src="https://cdn-icons-png.flaticon.com/512/5969/5969376.png" alt="AI" title="Artificial Intelligence" />
+    <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="SQL" title="SQL" />
+    <img src="https://cdn-icons-png.flaticon.com/512/6132/6132222.png" alt="C++" title="C++" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="Mysql" title="Mysql" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="MongoDB" title="MongoDB" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919828.png" alt="JavaScript" title="JavaScript" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="React" title="React" />
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Node.js" title="Node.js" />
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" title="GitHub" />
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968731.png" alt="Power BI" title="Power BI" />
+    <img src="https://cdn-icons-png.flaticon.com/512/919/919828.png" alt="VS Code" title="VS Code" />
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111425.png" alt="Jupyter" title="Jupyter" />
+  </div>
+</section>
+
+<section id="projects" class="visible">
+  <h2>Projects</h2>
+  <p id="projects-soon">🚧 Projects Coming Soon! Stay Tuned... 🚧</p>
+</section>
+
+<section id="contact" class="visible">
+  <h2>Contact Me</h2>
+  <div class="contact-info">
+    <p>Email: <a href="mailto:amanjshaikh2004@gmail.com">amanjshaikh2004@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://linkedin.com/in/aman-shaikh-072380369" target="_blank" rel="noopener">https://www.linkedin.com/in/aman-shaikh-072380369</a></p>
+    <p>Portfolio: <a href="https://www.anmoljanamatti.site" target="_blank" rel="noopener">www.anmoljanamatti.site</a></p>
+  </div>
+</section>
+
+<section id="count" class="visible">
+  <h2>My Portfolio View's</h2>
+  <footer>
+    <!-- hitwebcounter Code START -->
+    <a href="https://www.hitwebcounter.com" target="_blank">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=21436235&style=0010&nbdigits=5&type=page&initCount=0" 
+           title="Free hit web counter" 
+           alt="Free hit web counter" 
+           border="0" />
+    </a>
+  </footer>
+</section>
+
+<script>
+  // Only ONE roles animation script!
+  window.addEventListener('DOMContentLoaded', () => {
+    const roles = Array.from(document.querySelectorAll('#roles-container .role'));
+    let currentIndex = 0;
+
+    function showRole(index) {
+      roles.forEach((role, i) => {
+        role.classList.toggle('visible', i === index);
+      });
+    }
+
+    showRole(currentIndex);
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % roles.length;
+      showRole(currentIndex);
+    }, 2000);
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      let target = document.querySelector(this.getAttribute('href'));
+      if(target){
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Show sections on scroll
+  function revealSections() {
+    document.querySelectorAll('section').forEach(section => {
+      let rect = section.getBoundingClientRect();
+      if(rect.top < window.innerHeight - 80 && rect.bottom > 40){
+        section.classList.add('visible');
+      } else {
+        section.classList.remove('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealSections);
+  window.addEventListener('load', revealSections);
+
+  // Wave effect on skill logos
+  let skillsGrid = document.getElementById('skillsGrid');
+  skillsGrid.addEventListener('mouseenter', () => {
+    skillsGrid.classList.add('wave');
+    setTimeout(() => skillsGrid.classList.remove('wave'), 750);
+  });
+  skillsGrid.addEventListener('touchstart', () => {
+    skillsGrid.classList.add('wave');
+    setTimeout(() => skillsGrid.classList.remove('wave'), 750);
+  });
+</script>
+
+</body>
+</html>
